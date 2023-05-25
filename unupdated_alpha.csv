@@ -1,5 +1,3 @@
 id,code,neutralization
-dlo0lwK,"-rank(ts_mean(scale(inst7_perf20day),126))",SECTOR
-1n091A6,"-rank(last_diff_value(oth455_customer_roam_w5_pca_fact3_cluster_20,63)/ts_skewness(oth455_partner_n2v_p50_q200_w2_kmeans_cluster_20,252))",SECTOR
 goLAK7J,"-group_rank(ts_kurtosis(inst7_turnover,63),subindustry)",SUBINDUSTRY
 jdORr7E,"-rank(ts_scale(oth434_qes_model_prelimcomposite,20))",INDUSTRY
