@@ -24,11 +24,11 @@ page = 0
 
 df=pd.read_csv('done_alpha.csv',converters={'is':ast.literal_eval,'regular':ast.literal_eval}).drop_duplicates('id',keep='first')
 
-raw1 = df[(df['dateCreated']>last_update)&(df['fail']!=0)&(df['raw']==1)].sort_values(['sharpe','them'],ascending=False)['id'].to_list()
-raw2 = df[(df['dateCreated']>last_update)&(df['fail']!=0)&(df['raw']==2)].sort_values(['sharpe','them'],ascending=False)['id'].to_list()
-raw3 = df[(df['dateCreated']>last_update)&(df['fail']!=0)&(df['raw']==3)].sort_values(['sharpe','them'],ascending=False)['id'].to_list()
-rawo = df[(df['dateCreated']>last_update)&(df['fail']!=0)&(df['raw']>=4)].sort_values(['sharpe','them'],ascending=False)['id'].to_list()
-
+raw1 = df[(df['dateCreated']>last_update)&(df['raw']==1)].sort_values(['sharpe','them'],ascending=False)['id'].to_list()
+raw2 = df[(df['dateCreated']>last_update)&(df['raw']==2)].sort_values(['sharpe','them'],ascending=False)['id'].to_list()
+raw3 = df[(df['dateCreated']>last_update)&(df['raw']==3)].sort_values(['sharpe','them'],ascending=False)['id'].to_list()
+rawo = df[(df['dateCreated']>last_update)&(df['raw']>=4)].sort_values(['sharpe','them'],ascending=False)['id'].to_list()
+dem=0
 while k<=max_submit:
     try:
         for i in raw1:     
@@ -36,11 +36,15 @@ while k<=max_submit:
             print('Code Raw: ', df[df['id']==i]['code'].values[0])
             print('Sharpe: ', df[df['id']==i]['sharpe'].values[0])
             print('Fitness:', df[df['id']==i]['fitness'].values[0])
-            prod_corr = abs(Infor().get_prod_corr(i))
-            self_corr = abs(Infor().get_self_corr(i))
-            print(f'Prod correlation: {prod_corr}')
-            print(f'Self correlation: {self_corr}')
-            if (prod_corr<=submit_prod_corr)&(self_corr<=submit_self_corr):
+            try:
+                prod_corr = Infor().get_prod_corr(i)
+                self_corr = Infor().get_self_corr(i)
+                print(f'Prod correlation: {prod_corr}')
+                print(f'Self correlation: {self_corr}')
+            except:
+                continue
+
+            if (prod_corr<=submit_prod_corr)&(self_corr<=submit_self_corr)&(ladder!='FAIL')&(subuni!='FAIL'):
                 k = Infor().submit(i, k)
                 print('done')
                 if k >= max_submit:
@@ -53,14 +57,16 @@ while k<=max_submit:
         # Neu la raw alpha
             print('Code Raw: ', df[df['id']==i]['code'].values[0])
             print('Sharpe: ', df[df['id']==i]['sharpe'].values[0])
-            print('Fitness:', df[df['id']==i]['fitness'].values[0])
-            print(f'Prod correlation: {Infor().get_prod_corr(i)}')
-            print(f'Self correlation: {Infor().get_self_corr(i)}')
-            prod_corr = abs(Infor().get_prod_corr(i))
-            self_corr = abs(Infor().get_self_corr(i))
-            print(f'Prod correlation: {prod_corr}')
-            print(f'Self correlation: {self_corr}')
-            if (prod_corr<=submit_prod_corr)&(self_corr<=submit_self_corr):
+            print('Fitness:', df[df['id']==i]['fitness'].values[0]) 
+            try:
+                prod_corr = Infor().get_prod_corr(i)
+                self_corr = Infor().get_self_corr(i)
+                ladder, subuni = Infor().get_check_ladder(i)
+                print(f'Prod correlation: {prod_corr}')
+                print(f'Self correlation: {self_corr}')
+            except:
+                continue
+            if (prod_corr<=submit_prod_corr)&(self_corr<=submit_self_corr)&(ladder!='FAIL')&(subuni!='FAIL'):
                 k = Infor().submit(i, k)
                 if k >= max_submit:
                     sys.exit("Done")
@@ -74,13 +80,14 @@ while k<=max_submit:
             print('Code Raw: ', df[df['id']==i]['code'].values[0])
             print('Sharpe: ', df[df['id']==i]['sharpe'].values[0])
             print('Fitness:', df[df['id']==i]['fitness'].values[0])
-            print(f'Prod correlation: {Infor().get_prod_corr(i)}')
-            print(f'Self correlation: {Infor().get_self_corr(i)}')
-            prod_corr = abs(Infor().get_prod_corr(i))
-            self_corr = abs(Infor().get_self_corr(i))
-            print(f'Prod correlation: {prod_corr}')
-            print(f'Self correlation: {self_corr}')
-            if (prod_corr<=submit_prod_corr)&(self_corr<=submit_self_corr):
+            try:
+                prod_corr = Infor().get_prod_corr(i)
+                self_corr = Infor().get_self_corr(i)
+                print(f'Prod correlation: {prod_corr}')
+                print(f'Self correlation: {self_corr}')
+            except:
+                continue
+            if (prod_corr<=submit_prod_corr)&(self_corr<=submit_self_corr)&(ladder!='FAIL')&(subuni!='FAIL'):
                 k = Infor().submit(i, k)
                 if k >= max_submit:
                     sys.exit("Done")
@@ -94,13 +101,14 @@ while k<=max_submit:
             print('Code Raw: ', df[df['id']==i]['code'].values[0])
             print('Sharpe: ', df[df['id']==i]['sharpe'].values[0])
             print('Fitness:', df[df['id']==i]['fitness'].values[0])
-            print(f'Prod correlation: {Infor().get_prod_corr(i)}')
-            print(f'Self correlation: {Infor().get_self_corr(i)}')
-            prod_corr = abs(Infor().get_prod_corr(i))
-            self_corr = abs(Infor().get_self_corr(i))
-            print(f'Prod correlation: {prod_corr}')
-            print(f'Self correlation: {self_corr}')
-            if (prod_corr<=submit_prod_corr)&(self_corr<=submit_self_corr):
+            try:
+                prod_corr = Infor().get_prod_corr(i)
+                self_corr = Infor().get_self_corr(i)
+                print(f'Prod correlation: {prod_corr}')
+                print(f'Self correlation: {self_corr}')
+            except:
+                continue
+            if (prod_corr<=submit_prod_corr)&(self_corr<=submit_self_corr)&(ladder!='FAIL')&(subuni!='FAIL'):
                 k = Infor().submit(i, k)
                 if k >= max_submit:
                     sys.exit("Done")

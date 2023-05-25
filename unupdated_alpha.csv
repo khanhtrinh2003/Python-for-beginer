@@ -1,3 +1,1 @@
 id,code,neutralization
-goLAK7J,"-group_rank(ts_kurtosis(inst7_turnover,63),subindustry)",SUBINDUSTRY
-jdORr7E,"-rank(ts_scale(oth434_qes_model_prelimcomposite,20))",INDUSTRY
