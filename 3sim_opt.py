@@ -20,4 +20,4 @@ for i in lis:
     if count_pass(a)<6:
         continue
     else:
-        save(pd.DataFrame([a]),'updated_alpha.csv')
+        pass
